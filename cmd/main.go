@@ -23,6 +23,7 @@ func main() {
 	}
 
 	app := tview.NewApplication()
+	app.EnableMouse(true)
 
 	// Set up the main layout using the ui package
 	layout := ui.CreateMainLayout(app)
