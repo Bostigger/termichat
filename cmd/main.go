@@ -15,7 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
-
+	
 	// Load config
 	err = config.LoadConfig()
 	if err != nil {

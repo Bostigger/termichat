@@ -2,27 +2,31 @@ package widgets
 
 import (
 	"fmt"
-	"github.com/charmbracelet/glamour"
-	"github.com/gdamore/tcell/v2"
-	"github.com/rivo/tview"
+	"os"
 	"log"
 	"regexp"
 	"strings"
 	"sync"
+	"time"
 	"termichat/internal/chat"
+	"termichat/config"
+
+	"github.com/charmbracelet/glamour"
+	"github.com/gdamore/tcell/v2"
+	"github.com/rivo/tview"
 )
 
 // CreateTitleBox returns a configured title box
 func CreateTitleBox() *tview.TextView {
 	asciiArt := `
-	
+
 	████████╗███████╗██████╗░███╗░░░███╗██╗░█████╗░██╗░░██╗░█████╗░████████╗
 	╚══██╔══╝██╔════╝██╔══██╗████╗░████║██║██╔══██╗██║░░██║██╔══██╗╚══██╔══╝
 	░░░██║░░░█████╗░░██████╔╝██╔████╔██║██║██║░░╚═╝███████║███████║░░░██║░░░
 	░░░██║░░░██╔══╝░░██╔══██╗██║╚██╔╝██║██║██║░░██╗██╔══██║██╔══██║░░░██║░░░
 	░░░██║░░░███████╗██║░░██║██║░╚═╝░██║██║╚█████╔╝██║░░██║██║░░██║░░░██║░░░
 	░░░╚═╝░░░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
-	
+
 	`
 
 	titleBox := tview.NewTextView().
@@ -43,6 +47,9 @@ func CreateSubtitle() *tview.TextView {
 	return subtleTitleBox
 }
 
+var chatHistory string
+var chatArea tview.TextView
+
 // CreateChatArea returns a configured text view for chat responses.
 func CreateChatArea() *tview.TextView {
 	chatArea := tview.NewTextView()
@@ -60,7 +67,7 @@ func CreateChatArea() *tview.TextView {
 
 // SetupInputField configures the input field and returns it.
 func SetupInputField(app *tview.Application, chatArea *tview.TextView) *tview.InputField {
-	var chatHistory string
+
 	var chatMutex sync.Mutex
 	var r *glamour.TermRenderer
 	var err error
@@ -122,3 +129,61 @@ func SetupInputField(app *tview.Application, chatArea *tview.TextView) *tview.In
 
 	return inputField
 }
+
+// CreateButtons returns a button box with buttons for the user to click to clear chat history
+func ClearButton( chatArea *tview.TextView) *tview.Button {
+    button := tview.NewButton("Clear").
+        SetLabelColor(tcell.ColorWhite).
+        SetSelectedFunc(func() {
+			// Clear the chat history and the text in the chat area.
+            chatHistory = ""
+            chatArea.SetText("")
+        })
+	button.SetBackgroundColor(tcell.ColorBlack)
+    return button
+}
+
+func CloseButton(app *tview.Application) *tview.Button {
+	button := tview.NewButton("Close").
+		SetLabelColor(tcell.ColorWhite).
+		SetSelectedFunc(func() {
+			// Close the chat terminal user interface
+			app.Stop()
+		})
+	return button
+}
+
+func ExportButton() *tview.Button {
+    button := tview.NewButton("Export").
+        SetLabelColor(tcell.ColorWhite).
+        SetSelectedFunc(func() {
+            // Get the current chat history
+            currentChatHistory := GetChatHistory()
+
+            // Generate a filename with timestamp and a predefined topic
+            topic := "MyTopic" // Replace with your desired topic
+            timestamp := time.Now().Format("20060102-150405") // Format: YYYYMMDD-HHMMSS
+            filename := fmt.Sprintf("%s_chat_history_%s_%s.txt", config.ChatHistoryPath, topic, timestamp)
+
+            // Create the file
+            file, err := os.Create(filename)
+            if err != nil {
+                fmt.Println("Error creating file:", err)
+                return
+            }
+            defer file.Close()
+
+            // Write the chat history to the file
+            file.WriteString(currentChatHistory)
+        })
+    return button
+}
+
+// GetChatHistory returns the current chat history
+func GetChatHistory() string {
+	return chatHistory
+}
+
+
+
+
