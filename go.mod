@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/gdamore/tcell/v2 v2.7.0
 	github.com/joho/godotenv v1.5.1
-	github.com/rivo/tview v0.0.0-20240120095012-7568c3f71cfa
+	github.com/rivo/tview v0.0.0-20240122063236-8526c9fe1b54
 )
 
 require (

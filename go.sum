@@ -38,6 +38,8 @@ github.com/olekukonko/tablewriter v0.0.5/go.mod h1:hPp6KlRPjbx+hW8ykQs1w3UBbZlj6
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rivo/tview v0.0.0-20240120095012-7568c3f71cfa h1:P0DxFQZNO0tTmCXSOzj4fzHxSlY5MnWswh+qUw5TRik=
 github.com/rivo/tview v0.0.0-20240120095012-7568c3f71cfa/go.mod h1:c0SPlNPXkM+/Zgjn/0vD3W0Ds1yxstN7lpquqLDpWCg=
+github.com/rivo/tview v0.0.0-20240122063236-8526c9fe1b54 h1:O2sPgzemzBPoeLuVrIyyNPwFxWqgh/AuAOfd65OIqMc=
+github.com/rivo/tview v0.0.0-20240122063236-8526c9fe1b54/go.mod h1:c0SPlNPXkM+/Zgjn/0vD3W0Ds1yxstN7lpquqLDpWCg=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.3/go.mod h1:FN3SvrM+Zdj16jyLfmOkMNblXMcoc8DfTHruCPUcx88=
